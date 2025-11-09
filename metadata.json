@@ -1,0 +1,5 @@
+{
+  "name": "Viết Kịch Bản V03",
+  "description": "Generate high-quality audio from text using AI. Get text suggestions, choose from various voices, preview them, and download the final audio as a WAV file.",
+  "requestFramePermissions": []
+}
