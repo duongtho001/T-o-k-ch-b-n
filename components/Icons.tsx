@@ -61,6 +61,12 @@ export const MortarBoardIcon: React.FC<IconProps> = ({ className }) => (
     </svg>
 );
 
+export const NewspaperIcon: React.FC<IconProps> = ({ className }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+    </svg>
+);
+
 export const LeafIcon: React.FC<IconProps> = ({ className }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -149,6 +155,7 @@ export const FileTextIcon: React.FC<IconProps> = ({ className = 'h-5 w-5' }) => 
     </svg>
 );
 
+{/* FIX: Replaced the entire KeyIcon component definition to fix a subtle syntax error that was causing multiple parsing failures. */}
 export const KeyIcon: React.FC<IconProps> = ({ className = 'h-6 w-6' }) => (
     <svg xmlns="http://www.w3.org/2000/svg" className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 5.25a3 3 0 013 3m-3-3a3 3 0 00-3 3m3-3h.008M9 12h.008M15 12h.008M12 15h.008M12 18h.008M12 21h.008M4.23 18.77a10.5 10.5 0 01-1.7-13.04l.05-.07a10.5 10.5 0 0118.44 6.28l.05.07a10.5 10.5 0 01-1.7 13.04l-.05.07a10.5 10.5 0 01-15.04-1.7l-.05-.07z" />

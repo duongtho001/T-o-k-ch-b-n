@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useMemo, useRef, useEffect } from 'react';
 import { generateTextSuggestion, generateStructuredStory, ApiKeyError, getApiKeys, setApiKeys } from './services/geminiService';
 import { TOPICS, LANGUAGE_GROUP } from './constants';
-import { LoadingSpinner, SparklesIcon, BookIcon, LightbulbIcon, QuoteIcon, FeatherIcon, MortarBoardIcon, ProductIcon, MailIcon, LeafIcon, GhostIcon, ShieldIcon, MaskIcon, DragonIcon, RocketIcon, MagnifyingGlassIcon, TheaterMasksIcon, CopyIcon, FileTextIcon, KeyIcon, UploadIcon, PlusIcon, ClockIcon, TrashIcon, DownloadIcon, CheckCircleIcon, ExclamationIcon, HeartIcon, RefreshIcon, SettingsIcon } from './components/Icons';
+import { LoadingSpinner, SparklesIcon, BookIcon, LightbulbIcon, QuoteIcon, FeatherIcon, MortarBoardIcon, ProductIcon, MailIcon, LeafIcon, GhostIcon, ShieldIcon, MaskIcon, DragonIcon, RocketIcon, MagnifyingGlassIcon, TheaterMasksIcon, CopyIcon, FileTextIcon, KeyIcon, UploadIcon, PlusIcon, ClockIcon, TrashIcon, DownloadIcon, CheckCircleIcon, ExclamationIcon, HeartIcon, RefreshIcon, SettingsIcon, NewspaperIcon } from './components/Icons';
 import SearchableDropdown from './components/SearchableDropdown';
 import { playSound } from './utils/soundUtils';
 import { CLICK_SOUND, GENERATE_START_SOUND, SUCCESS_SOUND } from './assets/sounds';
@@ -30,6 +30,7 @@ const TopicIcon: React.FC<{ topicId: string, className?: string }> = ({ topicId,
         case 'animal_world': return <LeafIcon className={className} />;
         case 'spiritual_story': return <HeartIcon className={className} />;
         case 'fairy_tale': return <SparklesIcon className={className} />;
+        case 'news': return <NewspaperIcon className={className} />;
         default: return null;
     }
 };

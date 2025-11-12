@@ -20,6 +20,7 @@ export const TOPICS = [
     { id: 'animal_world', name: 'Thế giới động vật', prompt: 'Viết một đoạn văn ngắn mô tả cuộc sống của một loài động vật hoang dã trong môi trường tự nhiên của nó.' },
     { id: 'spiritual_story', name: 'Câu chuyện tâm linh', prompt: 'Viết một câu chuyện ngắn về một trải nghiệm tâm linh hoặc một bài học cuộc sống sâu sắc.' },
     { id: 'fairy_tale', name: 'Cổ tích', prompt: 'Viết phần mở đầu của một câu chuyện cổ tích, giới thiệu một vương quốc huyền diệu và một nhân vật chính đặc biệt.' },
+    { id: 'news', name: 'Thời sự / Tin tức', prompt: 'Gợi ý một bản tóm tắt ngắn gọn về một sự kiện thời sự gần đây.' },
 ];
 
 export const LANGUAGE_GROUP: DropdownGroup[] = [
