@@ -156,7 +156,11 @@ export async function generateTextSuggestion(prompt: string, systemInstruction?:
     return executeApiCall(apiLogic, "Không thể lấy gợi ý từ AI. Vui lòng kiểm tra kết nối của bạn và thử lại.");
 }
 
-export async function generateStructuredStory(basePrompt: string, languageName: string, targetWordCount: number): Promise<StoryGenerationResult> {
+export async function generateStructuredStory(basePrompt: string, languageName: string, targetWordCount: number, isVoiceOptimized: boolean): Promise<StoryGenerationResult> {
+    const voiceOptimizationInstruction = isVoiceOptimized
+        ? `5. **Tối ưu hóa Giọng nói:** Để làm cho kịch bản trở nên sống động hơn, hãy tích hợp một cách tinh tế các gợi ý về ngữ điệu và cảm xúc vào lời thoại bằng dấu ngoặc đơn. Ví dụ: (cười nhẹ), (thì thầm), (háo hức). Các gợi ý này phải phù hợp với bối cảnh.`
+        : '';
+
     const prompt = `
         Bạn là một nhà văn chuyên viết hội thoại cho các vở kịch audio. Nhiệm vụ của bạn là viết một kịch bản ngắn, hai nhân vật bằng ${languageName} dựa trên gợi ý sau: "${basePrompt}".
 
@@ -165,6 +169,7 @@ export async function generateStructuredStory(basePrompt: string, languageName: 
         2.  **Độ dài:** Kịch bản phải có tổng cộng chính xác ${targetWordCount} từ. Việc tuân thủ nghiêm ngặt số lượng từ này là rất quan trọng.
         3.  **Chất lượng Lồng tiếng:** Lời thoại phải tự nhiên, mạch lạc và dễ cho diễn viên thể hiện. Nó phải nghe giống như một cuộc trò chuyện thật.
         4.  **Định dạng:** Kịch bản phải được định dạng với mỗi dòng bắt đầu bằng tên nhân vật, theo sau là dấu hai chấm và lời thoại của họ (ví dụ: "Tên nhân vật: Lời thoại").
+        ${voiceOptimizationInstruction}
 
         Toàn bộ đầu ra của bạn sẽ là một đối tượng JSON. Cung cấp kịch bản cuối cùng và danh sách tên các nhân vật duy nhất.
     `;

@@ -46,6 +46,7 @@ const Studio: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [areSoundsEnabled, setAreSoundsEnabled] = useState<boolean>(true);
     const [isDialogueMode, setIsDialogueMode] = useState<boolean>(false);
+    const [isVoiceOptimized, setIsVoiceOptimized] = useState<boolean>(true);
     const [isApiSettingsOpen, setIsApiSettingsOpen] = useState(false);
     const [apiKeysText, setApiKeysText] = useState('');
     const [history, setHistory] = useState<HistoryItem[]>([]);
@@ -150,11 +151,13 @@ const Studio: React.FC = () => {
 
             let newContent: string;
             if (isDialogueMode && isStoryTopic) {
-                const result = await generateStructuredStory(basePrompt, languageName, targetWordCount);
+                const result = await generateStructuredStory(basePrompt, languageName, targetWordCount, isVoiceOptimized);
                 setText(result.storyScript);
                 newContent = result.storyScript;
             } else {
                 const systemInstruction = `Bạn là một nhà viết kịch bản sáng tạo. Nhiệm vụ của bạn là viết một kịch bản mạch lạc, hấp dẫn và được chế tác đặc biệt để tường thuật bằng giọng nói. Ngôn ngữ phải rõ ràng, nghe tự nhiên và dễ nói. Câu chuyện phải diễn ra một cách logic.`;
+
+                const voiceOptimizationInstruction = `Để làm cho kịch bản trở nên sống động hơn khi được lồng tiếng, hãy tích hợp một cách tinh tế các gợi ý về ngữ điệu và cảm xúc trực tiếp vào văn bản bằng dấu ngoặc đơn. Ví dụ: (nói nhanh), (thì thầm một cách đáng sợ), (cười khúc khích), (thở dài). Các gợi ý này phải phù hợp với bối cảnh và chủ đề của câu chuyện.`;
 
                 const finalPrompt = `
                 ${basePrompt}
@@ -165,6 +168,7 @@ const Studio: React.FC = () => {
                 2.  **Độ dài:** Kịch bản phải có chính xác ${targetWordCount} từ. Việc tuân thủ nghiêm ngặt số lượng từ này là rất quan trọng để đáp ứng yêu cầu về thời lượng.
                 3.  **Định dạng:** Chia kịch bản thành các đoạn văn hoặc cảnh nếu phù hợp với câu chuyện. Sử dụng dấu ngắt dòng kép để phân tách chúng. Không thêm tiêu đề hoặc nhãn như "Cảnh 1".
                 4.  **Rõ ràng cho Lồng tiếng:** Sử dụng ngôn ngữ và cấu trúc câu rõ ràng, dễ đọc to. Tránh từ vựng quá phức tạp hoặc câu văn rắc rối.
+                ${isVoiceOptimized ? `5. **Tối ưu hóa Giọng nói:** ${voiceOptimizationInstruction}` : ''}
                 `;
                 const idea = await generateTextSuggestion(finalPrompt, systemInstruction);
                 setText(idea);
@@ -190,7 +194,7 @@ const Studio: React.FC = () => {
         } finally {
             setIsLoadingText(false);
         }
-    }, [selectedTopic, customPrompt, durationInMinutes, areSoundsEnabled, outputLanguage, isDialogueMode, uploadedFileName]);
+    }, [selectedTopic, customPrompt, durationInMinutes, areSoundsEnabled, outputLanguage, isDialogueMode, uploadedFileName, isVoiceOptimized]);
     
     const handleSaveApiKeys = () => {
         playSound(CLICK_SOUND, areSoundsEnabled);
@@ -415,11 +419,22 @@ const Studio: React.FC = () => {
                 
                 let newContent: string;
                 if (isDialogueMode && isStoryTopic) {
-                     const result = await generateStructuredStory(basePrompt, languageName, targetWordCount);
+                     const result = await generateStructuredStory(basePrompt, languageName, targetWordCount, isVoiceOptimized);
                      newContent = result.storyScript;
                 } else {
                      const systemInstruction = `Bạn là một nhà viết kịch bản sáng tạo, tạo ra nội dung mạch lạc, hấp dẫn để tường thuật bằng giọng nói.`;
-                     const finalPrompt = `${basePrompt}\n\n**YÊU CẦU:**\n- Ngôn ngữ: ${languageName}\n- Độ dài: Chính xác ${targetWordCount} từ.\n- Định dạng: Các đoạn văn rõ ràng, không có tiêu đề.`;
+                     const voiceOptimizationInstruction = `Để làm cho kịch bản trở nên sống động hơn khi được lồng tiếng, hãy tích hợp một cách tinh tế các gợi ý về ngữ điệu và cảm xúc trực tiếp vào văn bản bằng dấu ngoặc đơn. Ví dụ: (nói nhanh), (thì thầm một cách đáng sợ), (cười khúc khích), (thở dài). Các gợi ý này phải phù hợp với bối cảnh và chủ đề của câu chuyện.`;
+                     const finalPrompt = `
+                        ${basePrompt}
+
+                        ---
+                        **YÊU CẦU KỊCH BẢN:**
+                        1.  **Ngôn ngữ:** ${languageName}.
+                        2.  **Độ dài:** Chính xác ${targetWordCount} từ.
+                        3.  **Định dạng:** Các đoạn văn rõ ràng, không có tiêu đề.
+                        4.  **Rõ ràng cho Lồng tiếng:** Ngôn ngữ rõ ràng, dễ đọc to.
+                        ${isVoiceOptimized ? `5. **Tối ưu hóa Giọng nói:** ${voiceOptimizationInstruction}` : ''}
+                     `;
                      newContent = await generateTextSuggestion(finalPrompt, systemInstruction);
                 }
 
@@ -608,6 +623,15 @@ const Studio: React.FC = () => {
                                 <label htmlFor="dialogue-mode-toggle" className="text-sm font-medium text-gray-700 dark:text-gray-300">Kịch bản 2 nhân vật</label>
                                 <button role="switch" aria-checked={isDialogueMode} id="dialogue-mode-toggle" onClick={() => setIsDialogueMode(!isDialogueMode)} className={`${isDialogueMode ? 'bg-indigo-600' : 'bg-gray-300 dark:bg-gray-600'} relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800`}>
                                     <span className={`${isDialogueMode ? 'translate-x-6' : 'translate-x-1'} inline-block w-4 h-4 transform bg-white rounded-full transition-transform`} />
+                                </button>
+                            </div>
+                            <div className="flex items-center justify-between pt-2">
+                                <label htmlFor="voice-optimization-toggle" className="text-sm font-medium text-gray-700 dark:text-gray-300 flex-1 pr-4">
+                                    Tối ưu hóa cho Giọng nói AI
+                                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Thêm gợi ý cảm xúc (ví dụ: (cười), (thì thầm)) để giọng nói tự nhiên hơn.</p>
+                                </label>
+                                <button role="switch" aria-checked={isVoiceOptimized} id="voice-optimization-toggle" onClick={() => setIsVoiceOptimized(!isVoiceOptimized)} className={`${isVoiceOptimized ? 'bg-indigo-600' : 'bg-gray-300 dark:bg-gray-600'} relative inline-flex items-center h-6 rounded-full w-11 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800`}>
+                                    <span className={`${isVoiceOptimized ? 'translate-x-6' : 'translate-x-1'} inline-block w-4 h-4 transform bg-white rounded-full transition-transform`} />
                                 </button>
                             </div>
                         </section>
