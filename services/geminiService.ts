@@ -171,7 +171,7 @@ export async function generateStructuredStory(basePrompt: string, languageName: 
         4.  **Định dạng:** Kịch bản phải được định dạng với mỗi dòng bắt đầu bằng tên nhân vật, theo sau là dấu hai chấm và lời thoại của họ (ví dụ: "Tên nhân vật: Lời thoại").
         ${voiceOptimizationInstruction}
 
-        Toàn bộ đầu ra của bạn sẽ là một đối tượng JSON. Cung cấp kịch bản cuối cùng và danh sách tên các nhân vật duy nhất.
+        Toàn bộ đầu ra của bạn sẽ là một đối tượng JSON. Cung cấp kịch bản cuối cùng và danh sách tên các nhân vật duy nhất. KHÔNG bao gồm bất kỳ siêu dữ liệu nào khác, chẳng hạn như số lượng từ, trong phản hồi của bạn.
     `;
     const responseSchema = {
         type: Type.OBJECT,

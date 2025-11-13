@@ -169,6 +169,8 @@ const Studio: React.FC = () => {
                 3.  **Định dạng:** Chia kịch bản thành các đoạn văn hoặc cảnh nếu phù hợp với câu chuyện. Sử dụng dấu ngắt dòng kép để phân tách chúng. Không thêm tiêu đề hoặc nhãn như "Cảnh 1".
                 4.  **Rõ ràng cho Lồng tiếng:** Sử dụng ngôn ngữ và cấu trúc câu rõ ràng, dễ đọc to. Tránh từ vựng quá phức tạp hoặc câu văn rắc rối.
                 ${isVoiceOptimized ? `5. **Tối ưu hóa Giọng nói:** ${voiceOptimizationInstruction}` : ''}
+
+                QUAN TRỌNG: Chỉ trả về văn bản kịch bản thô. KHÔNG bao gồm bất kỳ văn bản nào khác, tiêu đề, ghi chú, siêu dữ liệu hoặc số từ.
                 `;
                 const idea = await generateTextSuggestion(finalPrompt, systemInstruction);
                 setText(idea);
@@ -434,6 +436,8 @@ const Studio: React.FC = () => {
                         3.  **Định dạng:** Các đoạn văn rõ ràng, không có tiêu đề.
                         4.  **Rõ ràng cho Lồng tiếng:** Ngôn ngữ rõ ràng, dễ đọc to.
                         ${isVoiceOptimized ? `5. **Tối ưu hóa Giọng nói:** ${voiceOptimizationInstruction}` : ''}
+
+                        QUAN TRỌNG: Chỉ trả về văn bản kịch bản thô. KHÔNG bao gồm bất kỳ văn bản nào khác, tiêu đề, ghi chú, siêu dữ liệu hoặc số từ.
                      `;
                      newContent = await generateTextSuggestion(finalPrompt, systemInstruction);
                 }
