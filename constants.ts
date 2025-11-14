@@ -27,12 +27,13 @@ export const LANGUAGE_GROUP: DropdownGroup[] = [
     {
         name: 'Ngôn ngữ có sẵn',
         options: [
-            { id: 'vi-VN', name: 'Tiếng Việt' },
+            { id: 'pt-PT', name: 'Bồ Đào Nha' },
             { id: 'en-US', name: 'Tiếng Anh (Mỹ)' },
-            { id: 'es-ES', name: 'Tiếng Tây Ban Nha' },
-            { id: 'fr-FR', name: 'Tiếng Pháp' },
-            { id: 'ja-JP', name: 'Tiếng Nhật' },
             { id: 'ko-KR', name: 'Tiếng Hàn' },
+            { id: 'ja-JP', name: 'Tiếng Nhật' },
+            { id: 'fr-FR', name: 'Tiếng Pháp' },
+            { id: 'es-ES', name: 'Tiếng Tây Ban Nha' },
+            { id: 'vi-VN', name: 'Tiếng Việt' },
         ]
     }
 ];
